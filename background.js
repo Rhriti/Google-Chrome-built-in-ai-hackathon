@@ -1,4 +1,12 @@
 let popupPort=null;
+let screenwidth=null;
+let screenheight=null;
+
+chrome.system.display.getInfo((displays) => {
+  const primaryDisplay = displays[0];
+  screenwidth = primaryDisplay.workArea.width;
+  screenheight = primaryDisplay.workArea.height;
+});
 
 chrome.runtime.onConnect.addListener((port) => {
   console.log('yeahhh');
@@ -27,6 +35,8 @@ chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
           type: 'popup',
           width: 300,
           height: 200,
+          top:Math.round((screenheight-200)/2),
+          left:Math.round((screenwidth-300)/2)
        
       },
       () => {
@@ -34,7 +44,7 @@ chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
           setTimeout(() => {
             if (popupPort){popupPort.postMessage(canceledDownloadData);}
             else{console.log('connection not set up yet');}
-        }, 100);
+        }, 500);
 
       });
   
