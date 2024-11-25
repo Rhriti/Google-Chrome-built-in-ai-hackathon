@@ -4,6 +4,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'build/pdf.worker.min.js';
 let sfn=null;
 let ab=null;
 let df=null;
+let tabs=null;
 
 async function suggestFilenameFromContent(url) {
       try {
@@ -14,7 +15,15 @@ async function suggestFilenameFromContent(url) {
   
         const arrayBuffer = await response.arrayBuffer();
         ab=arrayBuffer;
-        document.getElementById('content').textContent=df;
+
+        if (tabs[1].classList.contains('active')){
+          const contentElement1=document.getElementById('content');
+          contentElement1.classList.remove('spinner');
+          contentElement1.classList.add('bar');
+          contentElement1.textContent=df;
+          contentElement1.setAttribute('contenteditable', 'true');
+        }
+
         const typedArray = new Uint8Array(arrayBuffer);
   
         const loadingTask = pdfjsLib.getDocument(typedArray);
@@ -41,7 +50,16 @@ async function suggestFilenameFromContent(url) {
           console.log('ANSWER---------->',suggestedFilename);
 
           sfn=suggestedFilename;
+          document . getElementById('content').classList.remove('spinner');
+          if (tabs[0].classList.contains('active')){
 
+            const contentElement0=document.getElementById('content');
+            contentElement0.classList.remove('spinner');
+            contentElement0.textContent=sfn;
+            contentElement0.classList.add('bar');
+            contentElement0.setAttribute('contenteditable', 'true');
+          }
+          
           
         } else {
           throw new Error('AI model is not available');
@@ -57,34 +75,42 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM is ready mf');
   const port = chrome.runtime.connect({ name: "popup-connection" });
   //dom ready hone k bad connect karwana to avoid confusions
-  const tabs = document.querySelectorAll('.tab');
-  const saveButton = document.getElementById('saveButton');
+  tabs = document.querySelectorAll('.tab');
+  const saveButton = document.getElementById('click');
 
  
     //------------handle--this--shit------
     tabs[0].addEventListener('click',()=>{
       tabs[1].classList.remove('active');
+      document.getElementById('content').classList.remove('bar');
       tabs[0].classList.add('active');
-      document.getElementById('content').textContent=sfn;
-
-      //change color 
-      tabs[0].style.backgroundColor = 'yellow';
-      tabs[0].style.color = 'black';
-      tabs[1].style.backgroundColor = '';
-      tabs[1].style.color = '';
       
-    
+      if (sfn){
+        document.getElementById('content').classList.remove('spinner');
+        document.getElementById('content').textContent=sfn;
+        document.getElementById('content').classList.add('bar');
+        document.getElementById('content').setAttribute('contenteditable', 'true');
+
+      }else{
+        document.getElementById('content').textContent='';
+        document.getElementById('content').classList.add('spinner');}
+
     });
 
     tabs[1].addEventListener('click',()=>{
       tabs[0].classList.remove('active');
+      document.getElementById('content').classList.remove('bar');
       tabs[1].classList.add('active');
-      document.getElementById('content').textContent=df;
-       //change color 
-       tabs[1].style.backgroundColor = 'yellow';
-       tabs[1].style.color = 'black';
-       tabs[0].style.backgroundColor = '';
-       tabs[0].style.color = '';
+
+
+      if (df){
+        document.getElementById('content').classList.remove('spinner');
+        document.getElementById('content').textContent=df;
+        document.getElementById('content').classList.add('bar');
+        document.getElementById('content').setAttribute('contenteditable', 'true');
+
+      }else{document.getElementById('content').classList.add('spinner');}
+
       
     });
 

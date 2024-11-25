@@ -32,7 +32,7 @@ chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
       {
           url: chrome.runtime.getURL('popup.html'),
           type: 'popup',
-          width: 300,
+          width: 418,
           height: 200,
           top:Math.round((screenheight-200)/2),
           left:Math.round((screenwidth-300)/2)

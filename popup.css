@@ -1,0 +1,94 @@
+
+    /* General styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f9f9f9;
+    }
+
+    /* Tab styles */
+    .tabs {
+
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      max-width: 400px;
+      background-color: #f1f1f1;
+      border-bottom: 2px solid #ccc;
+      margin-bottom: 20px;
+    }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .tab:hover {
+      background-color: #ddd;
+    }
+    .tab.active {
+      background-color: #3498db;
+      color: white;
+      font-weight: bold;
+    }
+
+    /* Spinner styles */
+    .spinner {
+      width: 10px;
+      height: 10px;
+      border: 4px solid #f3f3f3; /* Light gray background */
+      border-top: 4px solid #3498db; /* Blue spinner */
+      border-radius: 50%; /* Circular shape */
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Save button styles */
+    .click {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: #3498db;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .click:hover {
+      background-color: #2874a6;
+    }
+   
+    .bar {
+      width: 80%;                  /* Adjust the width as needed */
+      max-width: 600px;            /* Maximum width to restrict stretching */
+      margin: 10px auto;           /* Center the element horizontally */
+      padding: 5px 10px;           /* Add padding inside */
+      border: 2px solid #ccc;      /* Define the border color and thickness */
+      border-radius: 10px;         /* Add curved edges */
+      height: 40px;                /* Fix the height */
+      line-height: 40px;           /* Match line-height to height for vertical centering */
+      white-space: nowrap;         /* Prevent line breaks */
+      overflow-x: auto;            /* Enable horizontal scrolling */
+      overflow-y: hidden;          /* Prevent vertical scrolling */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a soft shadow */
+      background-color: #f9f9f9;   /* Light background color */
+      font-family: Arial, sans-serif; /* Optional: Set a readable font */
+      font-size: 16px;             /* Adjust text size */
+  }
+  
