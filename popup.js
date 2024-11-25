@@ -13,6 +13,8 @@ async function suggestFilenameFromContent(url) {
       }
   
         const arrayBuffer = await response.arrayBuffer();
+        ab=arrayBuffer;
+        document.getElementById('content').textContent=df;
         const typedArray = new Uint8Array(arrayBuffer);
   
         const loadingTask = pdfjsLib.getDocument(typedArray);
@@ -39,7 +41,6 @@ async function suggestFilenameFromContent(url) {
           console.log('ANSWER---------->',suggestedFilename);
 
           sfn=suggestedFilename;
-          ab=arrayBuffer;
 
           
         } else {
@@ -62,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
  
     //------------handle--this--shit------
     tabs[0].addEventListener('click',()=>{
-      tabs[0].classList.remove('active');
+      tabs[1].classList.remove('active');
       tabs[0].classList.add('active');
       document.getElementById('content').textContent=sfn;
 
@@ -76,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     tabs[1].addEventListener('click',()=>{
-      tabs[1].classList.remove('active');
+      tabs[0].classList.remove('active');
       tabs[1].classList.add('active');
       document.getElementById('content').textContent=df;
        //change color 
@@ -95,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try{
           if (tabs[0].classList.contains('active') && ab && sfn){
             console.log('download file with suggested name ------>',sfn);
-          
+    
             downloadfile(ab,sfn);
           }
           if (tabs[1].classList.contains('active') && ab && df){
@@ -112,7 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("Message from background script to popup:", message);
     try {
         df=message.filename;
-        document.getElementById('content').textContent=df;
         suggestFilenameFromContent(message.url);
     } catch (err) {
         console.error("Error in handling message:", err);

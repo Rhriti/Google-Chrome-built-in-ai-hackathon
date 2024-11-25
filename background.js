@@ -9,7 +9,6 @@ chrome.system.display.getInfo((displays) => {
 });
 
 chrome.runtime.onConnect.addListener((port) => {
-  console.log('yeahhh');
   if (port.name === 'popup-connection') {
         console.log('connected to port');
         popupPort=port;
@@ -17,7 +16,7 @@ chrome.runtime.onConnect.addListener((port) => {
 });
 
 chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
-  console.log('download url -------->',downloadItem.url);
+
   if (downloadItem.mime && downloadItem.mime.includes('pdf') && !downloadItem.url.startsWith('blob') ) {
     chrome.downloads.cancel(downloadItem.id, () => {
       console.log(`Blocked download of file: ${downloadItem.filename}`);
