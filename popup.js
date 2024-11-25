@@ -3,6 +3,7 @@ console.log(pdfjsLib);
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'build/pdf.worker.min.js';
 let sfn=null;
 let ab=null;
+let df=null;
 
 async function suggestFilenameFromContent(url) {
       try {
@@ -39,7 +40,7 @@ async function suggestFilenameFromContent(url) {
 
           sfn=suggestedFilename;
           ab=arrayBuffer;
-          document.getElementById('isme_dalo').textContent=suggestedFilename;
+
           
         } else {
           throw new Error('AI model is not available');
@@ -51,21 +52,67 @@ async function suggestFilenameFromContent(url) {
     }
 
 document.addEventListener('DOMContentLoaded', () => {
+
   console.log('DOM is ready mf');
   const port = chrome.runtime.connect({ name: "popup-connection" });
   //dom ready hone k bad connect karwana to avoid confusions
+  const tabs = document.querySelectorAll('.tab');
+  const saveButton = document.getElementById('saveButton');
+
+ 
+    //------------handle--this--shit------
+    tabs[0].addEventListener('click',()=>{
+      tabs[0].classList.remove('active');
+      tabs[0].classList.add('active');
+      document.getElementById('content').textContent=sfn;
+
+      //change color 
+      tabs[0].style.backgroundColor = 'yellow';
+      tabs[0].style.color = 'black';
+      tabs[1].style.backgroundColor = '';
+      tabs[1].style.color = '';
+      
+    
+    });
+
+    tabs[1].addEventListener('click',()=>{
+      tabs[1].classList.remove('active');
+      tabs[1].classList.add('active');
+      document.getElementById('content').textContent=df;
+       //change color 
+       tabs[1].style.backgroundColor = 'yellow';
+       tabs[1].style.color = 'black';
+       tabs[0].style.backgroundColor = '';
+       tabs[0].style.color = '';
+      
+    });
 
 
-  document.getElementById("click").addEventListener("click", () => {
-    console.log("Button clicked");
-    if (sfn && ab){downloadfile(ab,sfn);}
-    else{console.log('either sfn or ab is null');}
+      saveButton.addEventListener("click", () => {
+        console.log("Button clicked");
+        // if (sfn && ab){downloadfile(ab,sfn);}
+        // else{console.log('either sfn or ab is null');}
+        try{
+          if (tabs[0].classList.contains('active') && ab && sfn){
+            console.log('download file with suggested name ------>',sfn);
+          
+            downloadfile(ab,sfn);
+          }
+          if (tabs[1].classList.contains('active') && ab && df){
+            console.log('download file with default name------>',df);
+            downloadfile(ab,df);
+          }}
+          catch(error){
+            console.log('kuch to error aya',error);
+          }
 
-});
+    });
 
   port.onMessage.addListener(async (message) => {
     console.log("Message from background script to popup:", message);
     try {
+        df=message.filename;
+        document.getElementById('content').textContent=df;
         suggestFilenameFromContent(message.url);
     } catch (err) {
         console.error("Error in handling message:", err);
