@@ -42,8 +42,9 @@ async function suggestFilenameFromContent(url) {
         const { available } = await ai.languageModel.capabilities();
         if (available !== "no") {
           const session = await ai.languageModel.create({
-            temperature: .8,topK:4,
-             systemPrompt: `JUST give me a single suitable title (not more than 10 words) after analyzing the content.Hint: you might find a suitable title in the starting few lines itself.`
+            temperature: .4,topK:4,
+             systemPrompt: `you are an AI assistant who goes through the content i provide and suggest a single suitable 
+             title for it.just give me the suitable title`
           });
           const result = await session.prompt(content);
           const suggestedFilename = result.replace(/\s+/g, '_') ;
