@@ -1,151 +1,131 @@
-const pdfjsLib = window['pdfjs-dist/build/pdf'];
-console.log('pdfjslib===============>',pdfjsLib);
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'build/pdf.worker.min.js';
-let sfn=null;
-let ab=null;
-let df=null;
 
+const pdfjsLib = window['pdfjs-dist/build/pdf'];
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'build/pdf.worker.min.js';
+
+let suggestedFilename = null;
+let arrayBuffer = null;
+let defaultFilename = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-
-  console.log('DOM is ready mf');
   const port = chrome.runtime.connect({ name: "popup-connection" });
-  //dom ready hone k bad connect karwana to avoid confusions
   const suggestedTab = document.getElementById('suggestedTab');
   const defaultTab = document.getElementById('defaultTab');
   const saveButton = document.getElementById('saveButton');
+  const errorMessage = document.getElementById('error-message');
 
-  async function suggestFilenameFromContent(url) {
+  // Utility Functions
+  const toggleLoading = (show) => {
+    document.getElementById('loading-icon').style.display = show ? 'block' : 'none';
+    document.getElementById('content').style.display = show ? 'none' : 'block';
+  };
+
+  const updateTextboxContent = (content) => {
+    document.getElementById('content').value = content;
+  };
+
+  const triggerError = () => {
+    saveButton.classList.add('error');
+    errorMessage.style.display = 'block';
+    setTimeout(() => {
+      saveButton.classList.remove('error');
+      errorMessage.style.display = 'none';
+    }, 1500);
+  };
+
+  const downloadFile = (buffer, filename) => {
+    const blob = new Blob([buffer], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = filename;
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+
+    URL.revokeObjectURL(url);
+  };
+
+  // Business Logic
+  const suggestFilenameFromContent = async (url) => {
     try {
       const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error('Failed to fetch PDF.');
-    }
+      if (!response.ok) throw new Error('Failed to fetch PDF.');
 
-      const arrayBuffer = await response.arrayBuffer();
-      ab = arrayBuffer;
-      if (defaultTab.classList.contains('active')) {
-        console.log('ab is defined now you can save with default name');
-        hideLoadingAndShowTextbox('default');
-      }
-      const typedArray = new Uint8Array(arrayBuffer);
-
-      const loadingTask = pdfjsLib.getDocument(typedArray);
-      const pdf = await loadingTask.promise;
-      let content = '';
-
+      arrayBuffer = await response.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument(new Uint8Array(arrayBuffer)).promise;
       const page = await pdf.getPage(1);
       const textContent = await page.getTextContent();
+      const content = textContent.items.map((item) => item.str).join(' ');
 
-      textContent.items.forEach(item => {
-        content += item.str + ' ';
-      });
-
-      console.log(content);
-      // Use Chrome's built-in AI to suggest a filename
-      const { available } = await ai.languageModel.capabilities();
-      if (available !== "no") {
+      const aiCapabilities = await ai.languageModel.capabilities();
+      if (aiCapabilities.available !== "no") {
         const session = await ai.languageModel.create({
-          temperature: .8,topK:4,
-           systemPrompt: `You are a AI based filename suggester.Go through the first page of the file and suggest a SINGLE suitable filename`
+          temperature: 0.8,
+          topK: 3,
+          systemPrompt: `You are an AI-based filename suggester. Suggest a SINGLE suitable filename based on the first page of a PDF, no longer than 10 words.`,
         });
-        const result = await session.prompt(content);
-        const suggestedFilename = result.replace(/\s+/g, '_') ;
-        console.log('ANSWER---------->',suggestedFilename);
-
-        sfn = suggestedFilename;
+        suggestedFilename = (await session.prompt(content)).replace(/\s+/g, '_');
         if (suggestedTab.classList.contains('active')) {
-          hideLoadingAndShowTextbox('suggested');
+          toggleLoading(false);
+          updateTextboxContent(suggestedFilename);
         }
-        
       } else {
         throw new Error('AI model is not available');
       }
     } catch (error) {
-      console.error('Failed to suggest filename from content:', error);
+      console.error('Error suggesting filename:', error);
       throw error;
     }
-  }
+  };
 
-  function downloadfile(arrayBuffer,suggestedFilename){
-    const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
-    const objectURL = URL.createObjectURL(blob);
+  const switchTab = (tab) => {
+    suggestedTab.classList.toggle('active', tab === 'suggested');
+    defaultTab.classList.toggle('active', tab === 'default');
 
-    const a = document.createElement('a');
-    a.href = objectURL;
-    console.log('blob url--->', a.href);
-    a.download = suggestedFilename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(objectURL);
-}
-
-  function hideLoadingAndShowTextbox(tab) {
-
-    document.getElementById('loading-icon').style.display = 'none';
-    document.getElementById('content').style.display = 'block';
-
-    if (tab == 'default') {
-
-      document.getElementById('content').value = df;
-    } else {
-      document.getElementById('content').value = sfn;
-    }
-}
-
-  function switchTab(tab) {
     if (tab === 'suggested') {
-        suggestedTab.classList.add('active');
-        defaultTab.classList.remove('active');
-      if (sfn) {
-        hideLoadingAndShowTextbox('suggested');
+      if (suggestedFilename) {
+        toggleLoading(false);
+        updateTextboxContent(suggestedFilename);
+      } else {
+        toggleLoading(true);
       }
-      else {
-        document.getElementById('loading-icon').style.display = 'block';
-        document.getElementById('content').style.display = 'none';
+    } else if (tab === 'default') {
+      if (defaultFilename) {
+        toggleLoading(false);
+        updateTextboxContent(defaultFilename);
       }
-     
-    } else {
-        defaultTab.classList.add('active');
-        suggestedTab.classList.remove('active');
-      if (df) {
-        hideLoadingAndShowTextbox('default');
-        }
     }
-}
+  };
 
+  // Event Listeners
   suggestedTab.addEventListener('click', () => switchTab('suggested'));
   defaultTab.addEventListener('click', () => switchTab('default'));
 
-
   saveButton.addEventListener('click', () => {
     try {
-        if (suggestedTab.classList.contains('active') && ab && sfn) {
-            console.log('Downloading file with suggested name:', sfn);
-            downloadfile(ab, sfn);
-        } else if (defaultTab.classList.contains('active') && ab && df) {
-            console.log('Downloading file with default name:', df);
-            downloadfile(ab,df);
-        } else {
-            console.error('No filename or data available for download.');
-        }
+      if (suggestedTab.classList.contains('active') && arrayBuffer && suggestedFilename) {
+        downloadFile(arrayBuffer, suggestedFilename);
+      } else if (defaultTab.classList.contains('active') && arrayBuffer && defaultFilename) {
+        downloadFile(arrayBuffer, defaultFilename);
+      } else {
+        triggerError();
+      }
     } catch (error) {
-        console.error('Error during file download:', error);
+      console.error('Error during file download:', error);
     }
-    });
-
+  });
 
   port.onMessage.addListener(async (message) => {
-    console.log("Message from background script to popup:", message);
     try {
-      df = message.filename;
-      if (defaultTab.classList.contains('active')) { hideLoadingAndShowTextbox('default'); }
-        suggestFilenameFromContent(message.url);
-    } catch (err) {
-        console.error("Error in handling message:", err);
+      defaultFilename = message.filename;
+      if (defaultTab.classList.contains('active')) {
+        toggleLoading(false);
+        updateTextboxContent(defaultFilename);
+      }
+      await suggestFilenameFromContent(message.url);
+    } catch (error) {
+      console.error('Error handling message:', error);
     }
-});
-
-
+  });
 });

@@ -51,7 +51,7 @@ chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
   } else {
     // Allow the download
     console.log('default');
-    // suggest();
+  
   }
 });
 

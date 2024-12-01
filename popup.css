@@ -52,6 +52,12 @@
             background-color: #f9f9f9;
             overflow-wrap: break-word;
         }
+        #error-message {
+            color: #ff4d4d;
+            font-size: 12px;
+            margin-bottom: 10px;
+            display: none; /* Hidden by default */
+        }
 
         button {
             background-color: #007bff;
@@ -62,10 +68,15 @@
             font-size: 16px;
             cursor: pointer;
             width: 100%;
+            transition: background-color 0.3s ease;
         }
 
         button:hover {
             background-color: #0056b3;
+        }
+        button.error {
+            background-color: #ff4d4d; /* Turn red */
+            animation: shake 0.5s ease; /* Add shake animation */
         }
    
         .input-container {
@@ -94,5 +105,12 @@
             to {
                 transform: rotate(360deg);
             }
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
         }
         
