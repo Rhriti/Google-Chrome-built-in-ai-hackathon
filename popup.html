@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,36 +7,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="build/pdf.min.js"></script>
     <script src="popup.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
-        .tabs {
-            display: flex;
-            justify-content: space-around;
-            background-color: #f1f1f1;
-            border-bottom: 1px solid #ccc;
-        }
-        .tab {
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-        .tab.active {
-            background-color: #ddd;
-            font-weight: bold;
-        }
-        .content {
-            padding: 20px;
-        }
-    </style>
+
     
 </head>
 <body>
-    <!-- <pre id="isme_dalo"></pre>
-    <button id="click">Save File</button> -->
+
     <div class="tabs">
     <div class="tab" id="suggested">Suggested filename</div>
     <div class="tab active" id="default">Default filename</div>
@@ -44,5 +19,38 @@
 
     <div id="content">WAIT</div>  
     <button id="saveButton">Save</button>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic File Save UI</title>
+    <script src="build/pdf.min.js"></script>
+    <script src="popup.js"></script>
+    <link rel="stylesheet" href="popup.css">
+
+</head>
+<body>
+    <div class="container">
+
+        <div class="tabs">
+            <div class="tab" id="suggestedTab">Suggested Filename</div>
+            <div class="tab active" id="defaultTab">Default Filename</div>
+        </div>
+
+
+        <div class="input-container">
+            <input type="text" id="content" style="display: none;" />
+            <div class="loading-icon" id="loading-icon"></div>
+        </div>
+
+        <button id="saveButton">Save</button>
+
+    </div>
+
 </body>
 </html>

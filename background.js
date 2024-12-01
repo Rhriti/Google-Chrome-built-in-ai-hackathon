@@ -17,7 +17,7 @@ chrome.runtime.onConnect.addListener((port) => {
 });
 
 chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
-  console.log('download url -------->',downloadItem.url);
+  
   if (downloadItem.mime && downloadItem.mime.includes('pdf') && !downloadItem.url.startsWith('blob') ) {
     chrome.downloads.cancel(downloadItem.id, () => {
       console.log(`Blocked download of file: ${downloadItem.filename}`);
@@ -33,8 +33,8 @@ chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
       {
           url: chrome.runtime.getURL('popup.html'),
           type: 'popup',
-          width: 300,
-          height: 200,
+          width: 406,
+          height: 244,
           top:Math.round((screenheight-200)/2),
           left:Math.round((screenwidth-300)/2)
        
@@ -44,7 +44,7 @@ chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
           setTimeout(() => {
             if (popupPort){popupPort.postMessage(canceledDownloadData);}
             else{console.log('connection not set up yet');}
-        }, 500);
+        }, 1000);
 
       });
   
