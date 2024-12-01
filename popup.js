@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (available !== "no") {
         const session = await ai.languageModel.create({
           temperature: .8,topK:4,
-           systemPrompt: `JUST give me a single suitable title (not more than 10 words) after analyzing the content.Hint: you might find a suitable title in the starting few lines itself.`
+           systemPrompt: `You are a AI based filename suggester.Go through the first page of the file and suggest a SINGLE suitable filename`
         });
         const result = await session.prompt(content);
         const suggestedFilename = result.replace(/\s+/g, '_') ;
@@ -134,8 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Error during file download:', error);
     }
     });
-
-
 
 
   port.onMessage.addListener(async (message) => {
