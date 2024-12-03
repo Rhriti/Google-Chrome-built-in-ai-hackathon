@@ -12,7 +12,7 @@ This Chrome extension reimagines how you save pdf files by replacing the clunky,
 ### **The Problem**  
 Downloading files should be simple, but for so many of us, it’s an everyday frustration:  
 
-- Files are downloaded with meaningless names like *image_12345.pdf* or *notes_final_final.pdf*, turning file organization into a nightmare.  
+- Files are downloaded with meaningless names like *document_12345.pdf* or *notes_final_final.pdf*, turning file organization into a nightmare.  
 - Finding specific files later feels like searching for a needle in a haystack.  
 - For researchers, students, professionals, and developers dealing with high volumes of downloads, these small annoyances snowball into hours of lost productivity and disorganized chaos.  
 
