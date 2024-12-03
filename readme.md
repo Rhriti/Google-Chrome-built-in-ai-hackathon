@@ -20,7 +20,13 @@ This Chrome extension revolutionizes file downloading by taking away the pain an
 - One-Click Simplicity: Save files with intelligently suggested names in just a single click, no matter the source.
 Say goodbye to unorganized downloads and endless renaming. This extension puts you back in control of your files—and your time.
 
+## Installation
+Use Chrome Canary or Chrome dev.
 
+- Go to chrome://flags/
+- Select 'Enabled BypassPerfRequirement' from dropdown for 'Enables optimization guide on device'
+- Enable Prompt API for Gemini Nano
+- Load Unpacked extension from 'manage extension'
 
 
 ## Authors
