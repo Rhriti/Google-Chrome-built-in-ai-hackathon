@@ -36,9 +36,11 @@ NemaR is more than just a Chrome extension—it’s your productivity partner. B
 
 - Saves you countless hours of manual renaming.  
 - Keeps your digital workspace organized and clutter-free.  
-- Makes searching for files effortless and error-free.  
+- Makes searching for files effortless and error-free.
 
-Say goodbye to download frustration and hello to efficiency. With NemaR, you’re not just downloading files—you’re downloading clarity and control.  
+Say goodbye to download frustration and hello to efficiency. With NemaR, you’re not just downloading files—you’re downloading clarity and control.
+
+----
 
 ### Installation
 Use Chrome Canary or Chrome dev.
@@ -47,18 +49,15 @@ Use Chrome Canary or Chrome dev.
 - Select 'Enabled BypassPerfRequirement' from dropdown for 'Enables optimization guide on device'
 - Enable Prompt API for Gemini Nano
 - Load Unpacked extension from 'manage extension'
-
+---
 ### API
 Prompt API
+
 ### Authors
-
 - [@Rhriti](https://github.com/Rhriti)
-
-
 ### License
 
 [MIT](https://choosealicense.com/licenses/mit/)
-
 
 ### Support
 
