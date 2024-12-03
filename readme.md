@@ -1,10 +1,10 @@
 
-# **NemaR: The Smart AI Pdf Namer**
+# **NameR: The Smart AI Pdf Namer**
 
 ### **Elevate Your Downloading Experience**  
 Imagine this: You download a pdf file, but instead of meaningful clarity, you're greeted with *document(5).pdf*, *new(1).pdf*, or some cryptic jumble like *2020abc123.pdf*. Frustrating, isn’t it? Now picture sifting through hundreds of such files, struggling to find what you need, wasting precious time, and losing focus on what really matters.  
 
-**Introducing NemaR—your intelligent file-naming companion!**  
+**Introducing NameR—your intelligent file-naming companion!**  
 This Chrome extension reimagines how you save pdf files by replacing the clunky, outdated 'Save As' dialog with an interactive, modern popup. It dynamically suggests filenames tailored to the content of your downloads, putting an end to the chaos and inefficiency of meaningless file names.  
 
 ---
@@ -30,9 +30,9 @@ With NemaR, we’ve transformed pdf file saving into a seamless, intuitive exper
 
 ---
 
-### **Why NemaR Matters**  
+### **Why NameR Matters**  
 
-NemaR is more than just a Chrome extension—it’s your productivity partner. By solving a universal problem with simplicity and intelligence, it:  
+NameR is more than just a Chrome extension—it’s your productivity partner. By solving a universal problem with simplicity and intelligence, it:  
 
 - Saves you countless hours of manual renaming.  
 - Keeps your digital workspace organized and clutter-free.  
