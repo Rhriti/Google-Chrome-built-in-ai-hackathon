@@ -7,7 +7,7 @@ A filename recommendation system that suggests a suitable filename based on its 
 
 Downloading files should be simple, but instead, it’s an everyday frustration. You download a file, and it’s named something utterly meaningless like document(5).pdf or 2020abc123.pdf. Now you’re stuck renaming files, organizing folders, and wasting time on a task that should be effortless.It's a nightmare re-searching these files because of its absured filename.
 
-For professionals like researchers, students, developers, or anyone managing a high volume of downloads, this pain compounds into chaos. Searching for files becomes a nightmare, mistakes creep into workflows, and your digital life gets messier by the day. Worse yet, traditional browsers offer no intelligent solution to help you streamline this process.
+For professionals like researchers, students, developers, or anyone managing a high volume of downloads, this pain compounds into chaos. Searching for files becomes a nightmare, mistakes creep into workflows, and your digital life gets messier by the day.
 
 Why should we settle for this? Why should a simple file download feel like a chore?
 
@@ -28,7 +28,8 @@ Use Chrome Canary or Chrome dev.
 - Enable Prompt API for Gemini Nano
 - Load Unpacked extension from 'manage extension'
 
-
+### API
+Prompt API
 ## Authors
 
 - [@Rhriti](https://github.com/Rhriti)
@@ -37,4 +38,9 @@ Use Chrome Canary or Chrome dev.
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
+
+## Support
+
+For queries/ideas/collaborations mail hritijrana07@gmail.com
 
