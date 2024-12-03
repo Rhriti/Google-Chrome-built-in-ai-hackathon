@@ -22,7 +22,7 @@ We’ve all asked ourselves, **“Why is such a simple task still so broken?”*
 
 ### **The Solution**  
 
-With NemaR, we’ve transformed pdf file saving into a seamless, intuitive experience. Here’s how:  
+With NameR, we’ve transformed pdf file saving into a seamless, intuitive experience. Here’s how:  
 
 - **✨ AI-Powered Filename Suggestions:** Analyze file content (like PDFs) on the fly and generate human-readable, context-aware filenames that actually make sense.  
 - **🎨 Interactive UI:** Choose between the AI-suggested filename or the default one with ease. Need something unique? Customize filenames directly within the popup.  
