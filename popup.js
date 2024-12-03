@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const defaultTab = document.getElementById('defaultTab');
   const saveButton = document.getElementById('saveButton');
   const errorMessage = document.getElementById('error-message');
+  const contentInput = document.getElementById('content');
+
 
   // Utility Functions
   const toggleLoading = (show) => {
@@ -97,6 +99,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   };
+
+  contentInput.addEventListener('input', (event) => {
+    if (suggestedTab.classList.contains('active')) {
+      suggestedFilename = event.target.value;
+    } else if (defaultTab.classList.contains('active')) {
+      defaultFilename = event.target.value;
+    }
+  });
 
   // Event Listeners
   suggestedTab.addEventListener('click', () => switchTab('suggested'));

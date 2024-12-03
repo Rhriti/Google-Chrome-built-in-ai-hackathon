@@ -67,7 +67,7 @@
             padding: 10px 15px;
             font-size: 16px;
             cursor: pointer;
-            width: 100%;
+            width: 70%;
             transition: background-color 0.3s ease;
         }
 
@@ -92,6 +92,8 @@
             align-items: center;
             position: relative;
             height: 50px; /* Adjust height based on your design */
+            width: 100%;
+    
         }
 
         .loading-icon {
