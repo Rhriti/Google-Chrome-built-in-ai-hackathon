@@ -1,5 +1,5 @@
 
-# **NameR: The Smart AI Pdf Namer**
+# **NameR: An AI Pdf Namer**
 
 ### **Elevate Your Downloading Experience**  
 Imagine this: You download a pdf file, but instead of meaningful clarity, you're greeted with *document(5).pdf*, *new(1).pdf*, or some cryptic jumble like *2020abc123.pdf*. Frustrating, isn’t it? Now picture sifting through hundreds of such files, struggling to find what you need, wasting precious time, and losing focus on what really matters.  
